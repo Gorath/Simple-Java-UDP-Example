@@ -79,14 +79,23 @@ public class UDPServer {
 		//        any missing messages
 		if (msg.messageNum + 1 == msg.totalMessages) {
 			close = true;
+			
+			String s = "Lost packet numbers: ";
 			int count = 0;
-			for (int i = 0; i < msg.totalMessages; i++) {
-				if (receivedMessages[i] != 1) count++;
+			for (int i = 0; i < totalMessages; i++) {
+				if (receivedMessages[i] != 1) {
+					count++;
+					s = s + " " + (i+1) + ", ";
+				}
 			}
+			
+			if (count == 0) s = s + "None";
+			
 			System.out.println("Messages processed...");
 			System.out.println("Of " + msg.totalMessages + ", " + (msg.totalMessages - count) + " received successfully...");
 			System.out.println("Of " + msg.totalMessages + ", " + count + " failed...");
-			System.out.println("Efficiency: " + ((msg.totalMessages - count) / msg.totalMessages));
+			System.out.println(s);
+			System.out.println("Test finished.");
 		}
 		
 
